@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EcommerceWeb.Data
 {
-    public class CustomUserDbContext:IdentityDbContext
+    public class EcommerceWebDbContext:IdentityDbContext
     {
-        public CustomUserDbContext(DbContextOptions<CustomUserDbContext> options): base(options)
+        public EcommerceWebDbContext(DbContextOptions<EcommerceWebDbContext> options): base(options)
         {
             
         }
