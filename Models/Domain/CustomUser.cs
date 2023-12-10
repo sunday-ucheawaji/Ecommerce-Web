@@ -2,7 +2,7 @@
 
 namespace EcommerceWeb.Models.Domain
 {
-    public class CustomUser:IdentityUser
+    public class CustomUser:IdentityUser<Guid>
     {
         public Customer? Customer { get; set; }
 
