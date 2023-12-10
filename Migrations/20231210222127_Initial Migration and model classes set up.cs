@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace EcommerceWeb.Migrations
 {
     /// <inheritdoc />
-    public partial class Initialmigrationandmodelssetup : Migration
+    public partial class InitialMigrationandmodelclassessetup : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -474,6 +476,16 @@ namespace EcommerceWeb.Migrations
                         principalTable: "Products",
                         principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { new Guid("37e3c2b1-fd07-4960-99a5-3730651301cf"), "37e3c2b1-fd07-4960-99a5-3730651301cf", "Customer", "CUSTOMER" },
+                    { new Guid("a2eb9b13-721a-4d02-bf65-c65d6311600f"), "a2eb9b13-721a-4d02-bf65-c65d6311600f", "Supplier", "SUPPLIER" },
+                    { new Guid("cf8c88dc-69e3-4854-9dae-8ac4261155dc"), "cf8c88dc-69e3-4854-9dae-8ac4261155dc", "Staff", "STAFF" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -528,6 +528,29 @@ namespace EcommerceWeb.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("37e3c2b1-fd07-4960-99a5-3730651301cf"),
+                            ConcurrencyStamp = "37e3c2b1-fd07-4960-99a5-3730651301cf",
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
+                        },
+                        new
+                        {
+                            Id = new Guid("cf8c88dc-69e3-4854-9dae-8ac4261155dc"),
+                            ConcurrencyStamp = "cf8c88dc-69e3-4854-9dae-8ac4261155dc",
+                            Name = "Staff",
+                            NormalizedName = "STAFF"
+                        },
+                        new
+                        {
+                            Id = new Guid("a2eb9b13-721a-4d02-bf65-c65d6311600f"),
+                            ConcurrencyStamp = "a2eb9b13-721a-4d02-bf65-c65d6311600f",
+                            Name = "Supplier",
+                            NormalizedName = "SUPPLIER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

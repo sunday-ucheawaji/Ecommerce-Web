@@ -1,5 +1,7 @@
 using EcommerceWeb.Data;
+using EcommerceWeb.Mappings;
 using EcommerceWeb.Models.Domain;
+using EcommerceWeb.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -9,18 +11,36 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddIdentity<CustomUser, IdentityRole<Guid>>()
-            .AddEntityFrameworkStores<EcommerceWebDbContext>()
-            .AddDefaultTokenProviders();
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
+
+builder.Services.AddIdentityCore<CustomUser>()
+    .AddRoles<IdentityRole<Guid>>()
+    .AddTokenProvider<DataProtectorTokenProvider<CustomUser>>("EcommerceWeb")
+    .AddEntityFrameworkStores<EcommerceWebDbContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddDbContext<EcommerceWebDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("EcommerceWebConnectionString")));
+
+// Dependency Injections
+builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+builder.Services.AddScoped<ICustomerRepository, SQLCustomerRepository>();
+
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 1;
+});
 
 // JWT configuration
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

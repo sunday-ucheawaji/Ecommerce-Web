@@ -13,9 +13,6 @@ namespace EcommerceWeb.Data
             
         }
 
-        public DbSet<CustomUser> CustomUsers { get; set; }
-
-
         public DbSet<Customer>Customers { get; set; }
 
         public DbSet<Supplier> Suppliers { get; set; }
@@ -46,6 +43,10 @@ namespace EcommerceWeb.Data
         {
             base.OnModelCreating(builder);
 
+            
+
+
+
             // Configure one-to-one relationship between CustomUser and Customer
             builder.Entity<CustomUser>()
                 .HasOne(c => c.Customer)
@@ -72,6 +73,37 @@ namespace EcommerceWeb.Data
             builder.Entity<Product>()
                 .Property(p => p.Price)
                 .HasColumnType("decimal(18,2)"); // Adjust the precision and scale as needed
+
+            // Create default roles
+
+            var customerId = "37e3c2b1-fd07-4960-99a5-3730651301cf";
+            var supplierId = "a2eb9b13-721a-4d02-bf65-c65d6311600f";
+            var staffId = "cf8c88dc-69e3-4854-9dae-8ac4261155dc";
+
+            var roles = new List<IdentityRole<Guid>>
+            {
+                new IdentityRole<Guid> {
+                    Id = Guid.Parse(customerId),
+                    ConcurrencyStamp = customerId,
+                    Name = "Customer",
+                    NormalizedName = "Customer".ToUpper(),
+                },
+                 new IdentityRole<Guid> {
+                    Id = Guid.Parse(staffId),
+                    ConcurrencyStamp = staffId,
+                    Name = "Staff",
+                    NormalizedName = "Staff".ToUpper(),
+                },
+
+                  new IdentityRole<Guid> {
+                    Id = Guid.Parse(supplierId),
+                    ConcurrencyStamp = supplierId,
+                    Name = "Supplier",
+                    NormalizedName = "Supplier".ToUpper(),
+                },
+            };
+
+            builder.Entity<IdentityRole<Guid>>().HasData(roles);
 
         }
 
