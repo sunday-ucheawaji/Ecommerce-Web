@@ -13,6 +13,9 @@ namespace EcommerceWeb.Data
             
         }
 
+        public DbSet<CustomUser> CustomUsers { get; set; }
+
+
         public DbSet<Customer>Customers { get; set; }
 
         public DbSet<Supplier> Suppliers { get; set; }
