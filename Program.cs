@@ -30,6 +30,9 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("EcommerceWebConn
 // Dependency Injections
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddScoped<ICustomerRepository, SQLCustomerRepository>();
+builder.Services.AddScoped<ISupplierRepository, SQLSupplierRepository>();
+builder.Services.AddScoped<IStaffRepository, SQLStaffRepository>();
+
 
 
 builder.Services.Configure<IdentityOptions>(options =>
