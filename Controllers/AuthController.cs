@@ -5,7 +5,6 @@ using EcommerceWeb.Models.DTO.Customer;
 using EcommerceWeb.Models.DTO.Staff;
 using EcommerceWeb.Models.DTO.Supplier;
 using EcommerceWeb.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -138,7 +137,7 @@ namespace EcommerceWeb.Controllers
                         CustomUserId = identityUser.Id
                     };
 
-                    var staffDomainModel = staffRepository.CreateAsync(staffIdentityUser);
+                    var staffDomainModel = await staffRepository.CreateAsync(staffIdentityUser);
 
                     var staffDto = mapper.Map<StaffDto>(staffDomainModel); 
 
@@ -146,6 +145,36 @@ namespace EcommerceWeb.Controllers
                 }
             }
             return BadRequest("Something went wrong!");
+        }
+
+        [HttpPost]
+        [Route("Login")]
+
+        public async Task<IActionResult> Login([FromBody] LoginRequestDto loginDto)
+        {
+            var user = await userManager.FindByEmailAsync(loginDto.Email);
+
+            if (user != null)
+            {
+                var checkPasswordResult = await userManager.CheckPasswordAsync(user, loginDto.Password);
+                if (checkPasswordResult)
+                {
+                    // Get roles of the user
+                    var roles = await userManager.GetRolesAsync(user);
+                    if (roles != null)
+                    {
+                        // Create token
+                        var jwtToken = tokenRepository.CreateJWTToken(user, roles.ToList());
+                        var response = new LoginResponseDto
+                        {
+                            JwtToken = jwtToken,
+                        };
+                        return Ok(response);
+                    }
+                }
+            }
+
+            return BadRequest("Username or Password incorrect");
         }
 
     }
