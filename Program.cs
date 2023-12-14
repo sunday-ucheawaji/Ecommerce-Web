@@ -1,4 +1,5 @@
 using EcommerceWeb.Data;
+using EcommerceWeb.EmailServices;
 using EcommerceWeb.Mappings;
 using EcommerceWeb.Models.Domain;
 using EcommerceWeb.Repositories;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Net.Mail;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +28,10 @@ builder.Services.AddIdentityCore<CustomUser>()
 
 builder.Services.AddDbContext<EcommerceWebDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("EcommerceWebConnectionString")));
+
+// Email Service 
+//builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
+//builder.Services.AddTransient<EmailService>();
 
 // Dependency Injections
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();

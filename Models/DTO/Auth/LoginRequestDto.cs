@@ -2,7 +2,7 @@
 
 namespace EcommerceWeb.Models.DTO.Auth
 {
-    public class LoginDto
+    public class LoginRequestDto
     {
         [Required]
         [DataType(DataType.EmailAddress)]

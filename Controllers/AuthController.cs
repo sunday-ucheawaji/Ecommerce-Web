@@ -108,6 +108,7 @@ namespace EcommerceWeb.Controllers
 
         }
 
+
         [HttpPost]
         [Route("RegisterStaff")]
         public async Task<IActionResult> RegisterStaff([FromBody] RegisterStaffDto registerStaffDto)
@@ -146,6 +147,8 @@ namespace EcommerceWeb.Controllers
             }
             return BadRequest("Something went wrong!");
         }
+
+
 
         [HttpPost]
         [Route("Login")]
