@@ -19,10 +19,10 @@
 
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
-        public Guid Promotion {  get; set; }
 
 
         // Navigation Properties
+        public List<Promotion> Promotions { get; } = new();
         public ICollection<ProductImage> ProductImages { get; set; }
         public ICollection<OrderDetail> OrderDetails { get; set; }
 

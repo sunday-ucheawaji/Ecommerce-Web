@@ -1,5 +1,4 @@
 using EcommerceWeb.Data;
-using EcommerceWeb.EmailServices;
 using EcommerceWeb.Mappings;
 using EcommerceWeb.Models.Domain;
 using EcommerceWeb.Repositories;
@@ -7,7 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Net.Mail;
+using Microsoft.OpenApi.Models;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +15,35 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen( options =>
+{
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Ecommerce API", Version = "v1" });
+    options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = JwtBearerDefaults.AuthenticationScheme
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+
+        new OpenApiSecurityScheme
+        {
+            Reference = new OpenApiReference
+            {
+                Type = ReferenceType.SecurityScheme,
+                Id = JwtBearerDefaults.AuthenticationScheme
+            },
+            Scheme = "Oauth2",
+            Name = JwtBearerDefaults.AuthenticationScheme,
+            In = ParameterLocation.Header
+        },
+        new List<string>()
+        }
+    });
+} );
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
@@ -29,15 +56,15 @@ builder.Services.AddIdentityCore<CustomUser>()
 builder.Services.AddDbContext<EcommerceWebDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("EcommerceWebConnectionString")));
 
-// Email Service 
-//builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
-//builder.Services.AddTransient<EmailService>();
+
 
 // Dependency Injections
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddScoped<ICustomerRepository, SQLCustomerRepository>();
 builder.Services.AddScoped<ISupplierRepository, SQLSupplierRepository>();
 builder.Services.AddScoped<IStaffRepository, SQLStaffRepository>();
+builder.Services.AddScoped<IPromotionRepository, SQLPromotionRepository>();
+
 
 
 
@@ -76,6 +103,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
