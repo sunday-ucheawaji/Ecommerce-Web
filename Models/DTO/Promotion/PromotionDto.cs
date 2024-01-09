@@ -1,11 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using EcommerceWeb.Models.DTO.Product;
+using System.ComponentModel.DataAnnotations;
 
 namespace EcommerceWeb.Models.DTO.Promotion
 {
     public class PromotionDto
     {
         public Guid PromotionId { get; set; }
-
 
         [StringLength(100, MinimumLength = 3)]
         public string Title { get; set; }
@@ -19,5 +19,7 @@ namespace EcommerceWeb.Models.DTO.Promotion
 
         [Range(0, 100)]
         public int DiscountPercentage { get; set; }
+
+        public List<ProductDto>? Products { get; set; } = new List<ProductDto>();
     }
 }

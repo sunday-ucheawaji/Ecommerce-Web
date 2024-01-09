@@ -21,8 +21,8 @@ namespace EcommerceWeb.Controllers
         }
 
         [HttpGet]
-        [Route("promotions")]
-        [Authorize(Roles = "Staff")]
+        [Route("")]
+        //[Authorize(Roles = "Staff")]
         public async Task<IActionResult> GetAllPromotion()
         {
             var promotionsDomainModel = await promotionRepository.GetAllAsync();
@@ -33,7 +33,6 @@ namespace EcommerceWeb.Controllers
 
         [HttpGet]
         [Route("{id:Guid}")]
-        [Authorize(Roles ="Staff")]
 
         public async Task<IActionResult> GetPromotion([FromRoute] Guid id)
         {
@@ -49,7 +48,7 @@ namespace EcommerceWeb.Controllers
         }
 
         [HttpPost]
-        [Route("promotions")]
+        [Route("")]
         [Authorize(Roles = "Staff")]
         public async Task<IActionResult> CreatePromotion([FromBody] AddPromotionDto addPromotionDto)
         {

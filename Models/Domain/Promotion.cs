@@ -20,7 +20,7 @@ namespace EcommerceWeb.Models.Domain
         public int DiscountPercentage { get; set; }
 
         // Navigation Properties
-        public ICollection<Product> Products { get; set; }
+        public ICollection<ProductPromotion>? ProductPromotions { get; set; }
 
     }
 }

@@ -366,6 +366,24 @@ namespace EcommerceWeb.Migrations
                     b.ToTable("ProductImages");
                 });
 
+            modelBuilder.Entity("EcommerceWeb.Models.Domain.ProductPromotion", b =>
+                {
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PromotionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductPromotionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ProductId", "PromotionId");
+
+                    b.HasIndex("PromotionId");
+
+                    b.ToTable("ProductPromotions");
+                });
+
             modelBuilder.Entity("EcommerceWeb.Models.Domain.Promotion", b =>
                 {
                     b.Property<Guid>("PromotionId")
@@ -648,21 +666,6 @@ namespace EcommerceWeb.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ProductPromotion", b =>
-                {
-                    b.Property<Guid>("ProductsProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("PromotionsPromotionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ProductsProductId", "PromotionsPromotionId");
-
-                    b.HasIndex("PromotionsPromotionId");
-
-                    b.ToTable("ProductPromotion");
-                });
-
             modelBuilder.Entity("CategoryProduct", b =>
                 {
                     b.HasOne("EcommerceWeb.Models.Domain.Category", null)
@@ -764,6 +767,25 @@ namespace EcommerceWeb.Migrations
                         .HasForeignKey("ProductId");
                 });
 
+            modelBuilder.Entity("EcommerceWeb.Models.Domain.ProductPromotion", b =>
+                {
+                    b.HasOne("EcommerceWeb.Models.Domain.Product", "Product")
+                        .WithMany("ProductPromotions")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EcommerceWeb.Models.Domain.Promotion", "Promotion")
+                        .WithMany("ProductPromotions")
+                        .HasForeignKey("PromotionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Promotion");
+                });
+
             modelBuilder.Entity("EcommerceWeb.Models.Domain.Review", b =>
                 {
                     b.HasOne("EcommerceWeb.Models.Domain.Product", "Product")
@@ -848,21 +870,6 @@ namespace EcommerceWeb.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProductPromotion", b =>
-                {
-                    b.HasOne("EcommerceWeb.Models.Domain.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EcommerceWeb.Models.Domain.Promotion", null)
-                        .WithMany()
-                        .HasForeignKey("PromotionsPromotionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("EcommerceWeb.Models.Domain.BillBoard", b =>
                 {
                     b.Navigation("ProductImages");
@@ -899,6 +906,13 @@ namespace EcommerceWeb.Migrations
                     b.Navigation("OrderDetails");
 
                     b.Navigation("ProductImages");
+
+                    b.Navigation("ProductPromotions");
+                });
+
+            modelBuilder.Entity("EcommerceWeb.Models.Domain.Promotion", b =>
+                {
+                    b.Navigation("ProductPromotions");
                 });
 
             modelBuilder.Entity("EcommerceWeb.Models.Domain.Staff", b =>

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
+
 
 namespace EcommerceWeb.Data
 {
@@ -35,6 +35,8 @@ namespace EcommerceWeb.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<Promotion> Promotions { get; set; }
+        public DbSet<ProductPromotion> ProductPromotions { get; set; }
+
         public DbSet<Review> Reviews { get; set; }
 
 
@@ -42,10 +44,6 @@ namespace EcommerceWeb.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
-            
-
-
 
             // Configure one-to-one relationship between CustomUser and Customer
             builder.Entity<CustomUser>()
@@ -73,6 +71,21 @@ namespace EcommerceWeb.Data
             builder.Entity<Product>()
                 .Property(p => p.Price)
                 .HasColumnType("decimal(18,2)"); // Adjust the precision and scale as needed
+
+
+            // Configure many-to-many relationship between Product and Promotion
+            builder.Entity<ProductPromotion>()
+                .HasKey(pp => new { pp.ProductId, pp.PromotionId });
+
+            builder.Entity<ProductPromotion>()
+                .HasOne(pp => pp.Product)
+                .WithMany(p => p.ProductPromotions)
+                .HasForeignKey(pp => pp.ProductId);
+
+            builder.Entity<ProductPromotion>()
+                .HasOne(pp => pp.Promotion)
+                .WithMany(p => p.ProductPromotions)
+                .HasForeignKey(pp => pp.PromotionId);
 
             // Create default roles
 

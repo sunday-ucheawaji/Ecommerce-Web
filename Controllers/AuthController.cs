@@ -5,6 +5,7 @@ using EcommerceWeb.Models.DTO.Customer;
 using EcommerceWeb.Models.DTO.Staff;
 using EcommerceWeb.Models.DTO.Supplier;
 using EcommerceWeb.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -178,6 +179,36 @@ namespace EcommerceWeb.Controllers
             }
 
             return BadRequest("Username or Password incorrect");
+        }
+
+        [HttpGet]
+        [Route("Customers")]
+        [Authorize(Roles ="Staff")]
+        public async Task<IActionResult> GetAllCustomers()
+        {
+            var customers = await customerRepository.GetAllAsync();
+            var customerDto = mapper.Map<List<CustomerDto>>(customers);
+            return Ok(customerDto);
+        }
+
+        [HttpGet]
+        [Route("Staff")]
+        [Authorize(Roles = "Staff")]
+        public async Task<IActionResult> GetAllStaff()
+        {
+            var staff = await staffRepository.GetAllAsync();
+            var staffDto = mapper.Map<List<StaffDto>>(staff);
+            return Ok(staffDto);
+        }
+
+        [HttpGet]
+        [Route("Suppliers")]
+        [Authorize(Roles = "Staff")]
+        public async Task<IActionResult> GetAllSuppliers()
+        {
+            var suppliers = await supplierRepository.GetAllAsync();
+            var supplierDto = mapper.Map<List<SupplierDto>>(suppliers);
+            return Ok(supplierDto);
         }
 
     }
