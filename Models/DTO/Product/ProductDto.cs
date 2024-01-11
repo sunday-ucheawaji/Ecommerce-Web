@@ -1,4 +1,5 @@
 ﻿using EcommerceWeb.Models.Domain;
+using EcommerceWeb.Models.DTO.Image;
 using EcommerceWeb.Models.DTO.Promotion;
 
 namespace EcommerceWeb.Models.DTO.Product
@@ -30,7 +31,7 @@ namespace EcommerceWeb.Models.DTO.Product
 
         //public ICollection<ProductPromotionDto>? ProductPromotionDto { get; set; } = new List<ProductPromotionDto>();  
 
-        public ICollection<ProductImage>? ProductImages { get; set; }
+        public List<ProductImageDto>? ProductImages { get; set; } = new List<ProductImageDto>();
 
         public ICollection<OrderDetail>? OrderDetails { get; set; }
         public ICollection<Category>? Categories { get; set; }

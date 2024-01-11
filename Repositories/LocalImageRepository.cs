@@ -1,5 +1,7 @@
 ﻿using EcommerceWeb.Data;
 using EcommerceWeb.Models.Domain;
+using Microsoft.EntityFrameworkCore;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace EcommerceWeb.Repositories
 {
@@ -20,6 +22,73 @@ namespace EcommerceWeb.Repositories
             _dbContext = dbContext;
             
         }
+
+        public async Task<ProductImage?> Delete(Guid productImageId)
+        {
+            var existingProductImage = await _dbContext.ProductImages.FirstOrDefaultAsync(x => x.ProductImageId == productImageId);
+            if (existingProductImage == null)
+            {
+                return null;
+            }
+            _dbContext.ProductImages.Remove(existingProductImage);
+            await _dbContext.SaveChangesAsync();
+            return existingProductImage;
+        }
+
+        public async Task<List<ProductImage>> GetAll()
+        {
+            return await _dbContext.ProductImages.ToListAsync();
+        }
+
+        public async Task<ProductImage?> GetById(Guid productImageId)
+        {
+            return await _dbContext.ProductImages.FirstOrDefaultAsync(x => x.ProductImageId == productImageId);
+        }
+
+        public async Task<ProductImage?> Update(Guid productImageId, ProductImage image)
+        {
+            var existingProductImage = await _dbContext.ProductImages.FirstOrDefaultAsync(x=> x.ProductImageId == productImageId);
+            if (existingProductImage == null)
+            {
+                return null;
+            }
+
+            if(image.ProductId != null)
+            {
+                existingProductImage.ProductId = image.ProductId;
+            }
+
+            if(image.FileDescription != null)
+            {
+
+                existingProductImage.FileDescription = image.FileDescription;
+            }
+
+            if (image.FileName != null)
+            {
+
+                existingProductImage.FileName = image.FileName;
+            }
+
+            await _dbContext.SaveChangesAsync();
+
+            return existingProductImage;
+        }
+
+        public async Task<ProductImage?> UpdateProductId(Guid productImageId, Guid productId)
+        {
+            var existingProductImage = await _dbContext.ProductImages.FirstOrDefaultAsync(x => x.ProductImageId == productImageId);
+            if (existingProductImage == null)
+            {
+                return null;
+            }
+            existingProductImage.ProductId = productId;
+            await _dbContext.SaveChangesAsync();
+
+            return existingProductImage;
+
+        }
+
         public async Task<ProductImage> Upload(ProductImage image)
         {
             var localFilePath = Path.Combine(_webHostEnvironment.ContentRootPath,

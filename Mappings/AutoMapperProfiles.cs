@@ -2,6 +2,7 @@
 using EcommerceWeb.Data;
 using EcommerceWeb.Models.Domain;
 using EcommerceWeb.Models.DTO.Customer;
+using EcommerceWeb.Models.DTO.Image;
 using EcommerceWeb.Models.DTO.Product;
 using EcommerceWeb.Models.DTO.Promotion;
 using EcommerceWeb.Models.DTO.Staff;
@@ -28,8 +29,12 @@ namespace EcommerceWeb.Mappings
             CreateMap<UpdatePromotionDto, Promotion>().ReverseMap();
 
             CreateMap<Product, ProductDto>().ReverseMap();
+            CreateMap<Product, UpdateProductDto>().ReverseMap();
 
             CreateMap<Promotion, PromotionDto>();
+
+            CreateMap<ProductImage, ProductImageDto>().ReverseMap();
+            CreateMap<UpdateImageUploadDto,  ProductImage>().ReverseMap();
 
             CreateMap<Product, ProductWithPromotionsDto>()
                 .ForMember(dest => dest.Promotions, opt => opt.MapFrom(src => src.ProductPromotions.Select(pp => pp.Promotion).ToList()));

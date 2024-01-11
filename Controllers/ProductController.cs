@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using EcommerceWeb.Data;
 using EcommerceWeb.Models.Domain;
+using EcommerceWeb.Models.DTO.Image;
 using EcommerceWeb.Models.DTO.Product;
 using EcommerceWeb.Models.DTO.Promotion;
 using EcommerceWeb.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace EcommerceWeb.Controllers
 {
@@ -17,12 +16,18 @@ namespace EcommerceWeb.Controllers
         private readonly IProductRepository productRepository;
         private readonly IMapper mapper;
         private readonly EcommerceWebDbContext dbContext;
+        private readonly IImageRepository _imageRepository;
 
-        public ProductController(IProductRepository productRepository, IMapper mapper, EcommerceWebDbContext dbContext)
+        public ProductController(
+            IProductRepository productRepository, 
+            IMapper mapper, 
+            EcommerceWebDbContext dbContext, 
+            IImageRepository imageRepository)
         {
             this.productRepository = productRepository;
             this.mapper = mapper;
             this.dbContext = dbContext;
+            _imageRepository = imageRepository;
         }
 
         [HttpGet]
@@ -30,8 +35,6 @@ namespace EcommerceWeb.Controllers
         public async Task<IActionResult> GetAllProducts()
         {
             var productDomainModel = await productRepository.GetAllAsync();
-
-            //var productDto = mapper.Map<List<ProductWithPromotionsDto>>(productDomainModel);
 
             var productDto = productDomainModel.Select(product => new ProductDto
             {
@@ -55,7 +58,17 @@ namespace EcommerceWeb.Controllers
                                 DiscountPercentage = pp.Promotion.DiscountPercentage
                             })
                             .ToList(),
-                ProductImages = product.ProductImages,
+                ProductImages = product.ProductImages
+                                .Select(pp => new ProductImageDto
+                                {
+                                    ProductImageId = pp.ProductImageId,
+                                    FileName = pp.FileName,
+                                    FileDescription = pp.FileDescription,
+                                    FileExtension = pp.FileExtension,
+                                    FileSizeInBytes = pp.FileSizeInBytes,
+                                    FilePath = pp.FilePath,
+                                })
+                                .ToList(),
                 OrderDetails = product.OrderDetails,
                 Categories = product.Categories
             }).ToList();
@@ -92,7 +105,17 @@ namespace EcommerceWeb.Controllers
                                 DiscountPercentage = pp.Promotion.DiscountPercentage
                             })
                             .ToList(),
-                ProductImages = product.ProductImages,
+                ProductImages = product.ProductImages
+                                .Select(pp => new ProductImageDto
+                                {
+                                    ProductImageId = pp.ProductImageId,
+                                    FileName = pp.FileName,
+                                    FileDescription = pp.FileDescription,
+                                    FileExtension = pp.FileExtension,
+                                    FileSizeInBytes = pp.FileSizeInBytes,
+                                    FilePath = pp.FilePath,
+                                })
+                                .ToList(),
                 OrderDetails = product.OrderDetails,
                 Categories = product.Categories
             };
@@ -108,12 +131,12 @@ namespace EcommerceWeb.Controllers
         {
             var productDomainModel = mapper.Map<Product>(addProductDto);
 
-            var promotionList = new List<ProductPromotion>();
+            var productPromotionList = new List<ProductPromotion>();
             if (addProductDto.PromotionIds != null)
             {
                 foreach (var promotionId in addProductDto.PromotionIds)
                 {
-                    promotionList.Add(
+                    productPromotionList.Add(
                         new ProductPromotion
                         {
                             ProductId = productDomainModel.ProductId,
@@ -123,9 +146,24 @@ namespace EcommerceWeb.Controllers
                     );
                 }
 
-                productDomainModel.ProductPromotions = promotionList;
+                productDomainModel.ProductPromotions = productPromotionList;
             }
             productDomainModel = await productRepository.CreateAsync(productDomainModel);
+
+            var productImagesList = new List<ProductImage>();   
+            if (addProductDto.ProductImageIds != null)
+            {
+                foreach (var productImageId in addProductDto.ProductImageIds)
+                {
+                    var existingProductImage = await _imageRepository.UpdateProductId(productImageId, productDomainModel.ProductId);
+                    if (existingProductImage != null)
+                    {
+                        productImagesList.Add(existingProductImage);
+                    }
+                }
+                productDomainModel.ProductImages = productImagesList;
+                await dbContext.SaveChangesAsync();
+            }
 
             //var productDto = mapper.Map<ProductDto>(productDomainModel);
             productDomainModel = await productRepository.GetByIdAsync(productDomainModel.ProductId);
@@ -150,10 +188,60 @@ namespace EcommerceWeb.Controllers
                                 DiscountPercentage = pp.Promotion.DiscountPercentage
                             })
                             .ToList(),
+                ProductImages = productDomainModel.ProductImages
+                                .Select(pp => new ProductImageDto
+                                {
+                                    ProductImageId = pp.ProductImageId,
+                                    FileName = pp.FileName,
+                                    FileDescription = pp.FileDescription,
+                                    FileExtension = pp.FileExtension,
+                                    FileSizeInBytes = pp.FileSizeInBytes,
+                                    FilePath = pp.FilePath,
+                                    ProductId = pp.ProductId,
+                                })
+                                .ToList(),
             };
 
 
             return CreatedAtAction(nameof(GetProduct), new { id = productDto.ProductId }, productDto);
+        }
+
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateProduct([FromRoute] Guid id, UpdateProductDto updateProductDto)
+        {
+            var productDomainModel = mapper.Map<Product>(updateProductDto);
+
+
+
+            if (updateProductDto.ProductImageIds != null) 
+            {
+            
+            productDomainModel = await productRepository.UpdateAsync(id, productDomainModel, updateProductDto.ProductImageIds);
+            var producDto = mapper.Map<ProductDto>(productDomainModel);
+
+            return Ok(producDto);
+            }
+
+            return BadRequest();
+
+        }
+
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> DeleteProduct([FromRoute] Guid id)
+        {
+            var productDomain = await productRepository.DeleteAsync(id);
+
+            if (productDomain != null)
+            {
+
+                var productDto = mapper.Map<ProductDto>(productDomain);
+
+                return Ok(productDto);
+            }
+
+            return BadRequest();
         }
     }
 }

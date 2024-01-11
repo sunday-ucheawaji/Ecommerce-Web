@@ -10,7 +10,7 @@ namespace EcommerceWeb.Repositories
 
         Task<Product> CreateAsync(Product product);
 
-        Task<Product?> UpdateAsync(Product product);
+        Task<Product?> UpdateAsync(Guid productId, Product product, ICollection<Guid> productImageIDs);
 
         Task<Product?> DeleteAsync(Guid id);
     }

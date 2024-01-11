@@ -1,4 +1,5 @@
-﻿using EcommerceWeb.Models.Domain;
+﻿using AutoMapper;
+using EcommerceWeb.Models.Domain;
 using EcommerceWeb.Models.DTO.Image;
 using EcommerceWeb.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -11,10 +12,12 @@ namespace EcommerceWeb.Controllers
     public class ImagesController : ControllerBase
     {
         private readonly IImageRepository _imageRepository;
+        private readonly IMapper _mapper;
 
-        public ImagesController(IImageRepository imageRepository)
+        public ImagesController(IImageRepository imageRepository, IMapper mapper)
         {
             _imageRepository = imageRepository;
+            _mapper = mapper;
         }
 
         [HttpPost]
@@ -57,5 +60,50 @@ namespace EcommerceWeb.Controllers
                 ModelState.AddModelError("file", "File size more than 10MB, please upload a smaller size file.");
             }
         }
+
+        [HttpGet]
+        [Route("GetAllImages")]
+        public async Task<IActionResult> GetAllImages()
+        {
+            var imageDomainModel = await _imageRepository.GetAll();
+
+            var imageDto = _mapper.Map<List<ProductImageDto>>(imageDomainModel);
+
+            return Ok(imageDto);
+        }
+
+        [HttpGet]
+        [Route("{id:Guid}")]
+
+        public async Task<IActionResult> GetImageById([FromRoute] Guid id)
+        {
+            var imageDomainModel = await _imageRepository.GetById(id);
+            var imageDto = _mapper.Map<ProductImageDto>(imageDomainModel);
+
+            return Ok(imageDto);
+        }
+
+        [HttpPut]
+        [Route("{id:Guid}")]
+
+        public async Task<IActionResult> UpdateImage(Guid id, UpdateImageUploadDto updateImageUploadDto)
+        {
+            var imageDomainModel = _mapper.Map<ProductImage>(updateImageUploadDto);
+            imageDomainModel = await _imageRepository.Update(id, imageDomainModel);
+
+            var imageDto = _mapper.Map<ProductImageDto>(imageDomainModel);
+            return Ok(imageDto);
+        }
+
+        [HttpDelete]
+        [Route("{id:Guid}")]
+
+        public async Task<IActionResult> DeleteImage(Guid id)
+        {
+            var imageDomainModel = await _imageRepository.Delete(id);
+            var imageDto = _mapper.Map<ProductImageDto>(imageDomainModel);
+            return Ok(imageDto);
+        }
+
     }
 }
