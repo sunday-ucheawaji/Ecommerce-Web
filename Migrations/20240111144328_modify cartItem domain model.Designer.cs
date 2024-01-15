@@ -4,6 +4,7 @@ using EcommerceWeb.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcommerceWeb.Migrations
 {
     [DbContext(typeof(EcommerceWebDbContext))]
-    partial class EcommerceWebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240111144328_modify cartItem domain model")]
+    partial class modifycartItemdomainmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -248,8 +251,10 @@ namespace EcommerceWeb.Migrations
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("PaymentStatus")
-                        .HasColumnType("int");
+                    b.Property<string>("PaymentStatus")
+                        .IsRequired()
+                        .HasMaxLength(1)
+                        .HasColumnType("nvarchar(1)");
 
                     b.Property<DateTime>("PlacedAt")
                         .HasColumnType("datetime2");
@@ -696,7 +701,7 @@ namespace EcommerceWeb.Migrations
 
             modelBuilder.Entity("EcommerceWeb.Models.Domain.CartItem", b =>
                 {
-                    b.HasOne("EcommerceWeb.Models.Domain.Cart", "Cart")
+                    b.HasOne("EcommerceWeb.Models.Domain.Cart", null)
                         .WithMany("CartItems")
                         .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -707,8 +712,6 @@ namespace EcommerceWeb.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Cart");
 
                     b.Navigation("Product");
                 });

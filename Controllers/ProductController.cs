@@ -82,6 +82,10 @@ namespace EcommerceWeb.Controllers
         public async Task<IActionResult> GetProduct([FromRoute] Guid id)
         {
             var product = await productRepository.GetByIdAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
 
             var productDto = new ProductDto
             {

@@ -9,6 +9,7 @@
         public Guid CartId { get; set; }
         public Guid ProductId { get; set; }
 
+
         // Navigation Properties
         public Cart Cart { get; set; }
         public Product Product { get; set; }

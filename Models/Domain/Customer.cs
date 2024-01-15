@@ -19,8 +19,8 @@ namespace EcommerceWeb.Models.Domain
 
         // Navigation Property
         public CustomUser CustomUser { get; set; }
-        public IList<Order> Orders { get; set; }
-        public ICollection<Address> Addresses { get; set; }
+        public IList<Order>? Orders { get; set; }
+        public ICollection<Address>? Addresses { get; set; }
 
 
     }

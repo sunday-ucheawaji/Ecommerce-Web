@@ -1,10 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using EcommerceWeb.Models.Domain;
+using EcommerceWeb.Models.DTO.Cart;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using EcommerceWeb.Models.DTO.OrderDetailFolder;
 
-namespace EcommerceWeb.Models.Domain
+namespace EcommerceWeb.Models.DTO.Order
 {
-    public class Order
+    public class OrderDto
     {
+
         public enum PaymentStatusEnum
         {
             Pending = 'P',
@@ -17,7 +21,8 @@ namespace EcommerceWeb.Models.Domain
         public DateTime PlacedAt { get; set; } = DateTime.Now;
 
         [Required]
-        public PaymentStatusEnum PaymentStatus { get; set; } = PaymentStatusEnum.Pending ;
+        [StringLength(1)]
+        public PaymentStatusEnum PaymentStatus { get; set; } = PaymentStatusEnum.Pending;
 
         // Foreign Key relationship to customer
         public Guid CustomerId { get; set; }
@@ -30,8 +35,8 @@ namespace EcommerceWeb.Models.Domain
         }
 
         // Navigation Properties
-        public ICollection<OrderDetail>? OrderDetails { get; set; }
-        public Customer Customer { get; set; }
-
+        public ICollection<OrderDetailDto>? OrderDetails { get; set; }
+     
+      
     }
 }

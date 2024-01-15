@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
 using EcommerceWeb.Data;
 using EcommerceWeb.Models.Domain;
+using EcommerceWeb.Models.DTO.Cart;
+using EcommerceWeb.Models.DTO.CartItem;
 using EcommerceWeb.Models.DTO.Customer;
 using EcommerceWeb.Models.DTO.Image;
+using EcommerceWeb.Models.DTO.Order;
+using EcommerceWeb.Models.DTO.OrderDetailFolder;
 using EcommerceWeb.Models.DTO.Product;
 using EcommerceWeb.Models.DTO.Promotion;
 using EcommerceWeb.Models.DTO.Staff;
@@ -25,48 +29,46 @@ namespace EcommerceWeb.Mappings
             CreateMap<Staff, StaffDto>().ReverseMap();
 
             CreateMap<Promotion, PromotionDto>().ReverseMap();
-            CreateMap<AddPromotionDto, Promotion>().ReverseMap();
-            CreateMap<UpdatePromotionDto, Promotion>().ReverseMap();
+            CreateMap<Promotion, AddPromotionDto>().ReverseMap();
+            CreateMap<Promotion, UpdatePromotionDto>().ReverseMap();
 
             CreateMap<Product, ProductDto>().ReverseMap();
             CreateMap<Product, UpdateProductDto>().ReverseMap();
+            CreateMap<Product, AddProductDto>().ReverseMap();
+
+            CreateMap<ProductImage, ProductImageDto>().ReverseMap();
+            CreateMap<ProductImage, UpdateImageUploadDto>().ReverseMap();
 
             CreateMap<Promotion, PromotionDto>();
 
-            CreateMap<ProductImage, ProductImageDto>().ReverseMap();
-            CreateMap<UpdateImageUploadDto,  ProductImage>().ReverseMap();
 
             CreateMap<Product, ProductWithPromotionsDto>()
                 .ForMember(dest => dest.Promotions, opt => opt.MapFrom(src => src.ProductPromotions.Select(pp => pp.Promotion).ToList()));
 
 
-            CreateMap<AddProductDto, Product>().ReverseMap();
-            //CreateMap<AddProductDto, Product>()
-            //    .AfterMap((src, dest) =>
-            //    {
-            //        if (src.PromotionIds != null)
-            //        {
-            //            dest.ProductPromotions = new List<ProductPromotion>();
-            //            foreach (var promotionId in src.PromotionIds)
-            //            {
-            //                var promotion = dbContext.Promotions.FirstOrDefault(x=> x.PromotionId == promotionId);
-            //                if (promotion != null)
-            //                {
-            //                    dest.ProductPromotions.Add(new ProductPromotion
-            //                    {
-            //                        PromotionId = promotionId,
-            //                        Promotion = promotion,
-            //                        Product = dest
-            //                    });
-            //                }
-            //            }
-            //        }
-            //    });
+            CreateMap<Cart, CartDto>().ReverseMap();
+            CreateMap<Cart, UpdateCartDTo>().ReverseMap();
+
+            CreateMap<CartItem, CartItemDto>().ReverseMap();
+            CreateMap<CartItem, AddCartItemDto>().ReverseMap();
+
+            //CreateMap<Order, OrderDto>().ReverseMap();
+            CreateMap<Order, OrderDto>()
+                .ForMember(dest => dest.PaymentStatus, opt => opt.MapFrom(src => (OrderDto.PaymentStatusEnum)src.PaymentStatus));
+
+
+            CreateMap<OrderDetail, OrderDetailDto>().ReverseMap();
+            CreateMap<OrderDetail, AddOrderDetailDto>().ReverseMap();
+            CreateMap<OrderDetail, UpdateOrderDetailDto>().ReverseMap();
+
+
+
+
         }
 
-       
 
-     
+
+
 
     }
 }

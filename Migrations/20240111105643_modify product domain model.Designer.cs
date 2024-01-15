@@ -4,6 +4,7 @@ using EcommerceWeb.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcommerceWeb.Migrations
 {
     [DbContext(typeof(EcommerceWebDbContext))]
-    partial class EcommerceWebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240111105643_modify product domain model")]
+    partial class modifyproductdomainmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -248,8 +251,10 @@ namespace EcommerceWeb.Migrations
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("PaymentStatus")
-                        .HasColumnType("int");
+                    b.Property<string>("PaymentStatus")
+                        .IsRequired()
+                        .HasMaxLength(1)
+                        .HasColumnType("nvarchar(1)");
 
                     b.Property<DateTime>("PlacedAt")
                         .HasColumnType("datetime2");
@@ -703,7 +708,7 @@ namespace EcommerceWeb.Migrations
                         .IsRequired();
 
                     b.HasOne("EcommerceWeb.Models.Domain.Product", "Product")
-                        .WithMany("CartItems")
+                        .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -901,8 +906,6 @@ namespace EcommerceWeb.Migrations
 
             modelBuilder.Entity("EcommerceWeb.Models.Domain.Product", b =>
                 {
-                    b.Navigation("CartItems");
-
                     b.Navigation("OrderDetails");
 
                     b.Navigation("ProductImages");

@@ -26,9 +26,11 @@
         // Navigation Properties
         public ICollection<ProductPromotion>? ProductPromotions { get; set; } = new List<ProductPromotion>();
         public ICollection<ProductImage>? ProductImages { get; set; } = new List<ProductImage>();
-        public ICollection<OrderDetail>? OrderDetails { get; set; }
+        public ICollection<OrderDetail>? OrderDetails { get; set; } = new List<OrderDetail>();
 
-        public List<Category>? Categories { get; } = new();
+        public ICollection<CartItem>? CartItems { get; set; } = new List<CartItem>();
+
+        public List<Category>? Categories { get; } = new List<Category>();
        
 
     }

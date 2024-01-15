@@ -34,20 +34,7 @@ namespace EcommerceWeb.Repositories
       
         public async Task<Product> CreateAsync(Product product)
         {
-            //var promotionList = new List<ProductPromotion>();
-
-            //foreach (var promotionId in promotionIds)
-            //{
-            //    promotionList.Add(
-            //        new ProductPromotion
-            //        {
-            //            ProductId = product.ProductId,
-            //            PromotionId = promotionId,
-            //            ProductPromotionId = Guid.NewGuid(),
-            //        }
-            //    );
-            //}
-            //product.ProductPromotions = promotionList;
+            
             await dbContext.Products.AddAsync(product);
             await dbContext.SaveChangesAsync();
             return product;

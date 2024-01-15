@@ -4,6 +4,6 @@
     {
         public Guid CartId { get; set; }
 
-        public ICollection<CartItem> CartItems { get; set; }
+        public ICollection<CartItem>? CartItems { get; set; }
     }
 }

@@ -68,6 +68,10 @@ builder.Services.AddScoped<IStaffRepository, SQLStaffRepository>();
 builder.Services.AddScoped<IPromotionRepository, SQLPromotionRepository>();
 builder.Services.AddScoped<IProductRepository, SQLProductRepository>();
 builder.Services.AddScoped<IImageRepository, LocalImageRepository>();
+builder.Services.AddScoped<ICartRepository, SQLCartRepository>();
+builder.Services.AddScoped<ICartItemRepository, SQLCartItemRepository>();
+builder.Services.AddScoped<IOrderRepository, SQLOrderRepository>();
+builder.Services.AddScoped<IOrderDetailRepository, SQLOrderDetailRepository>();
 
 
 
