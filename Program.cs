@@ -72,6 +72,9 @@ builder.Services.AddScoped<ICartRepository, SQLCartRepository>();
 builder.Services.AddScoped<ICartItemRepository, SQLCartItemRepository>();
 builder.Services.AddScoped<IOrderRepository, SQLOrderRepository>();
 builder.Services.AddScoped<IOrderDetailRepository, SQLOrderDetailRepository>();
+builder.Services.AddScoped<IAddressRepository, SQLAddressRepository>();
+builder.Services.AddScoped<IBillBoardRepository, SQLBillBoardRepository>();
+builder.Services.AddScoped<ICategoryRepository, SQLCategoryRepository>();
 
 
 

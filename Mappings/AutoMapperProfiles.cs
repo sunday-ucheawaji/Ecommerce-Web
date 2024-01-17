@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using EcommerceWeb.Data;
 using EcommerceWeb.Models.Domain;
+using EcommerceWeb.Models.DTO.Address;
+using EcommerceWeb.Models.DTO.BillBoard;
 using EcommerceWeb.Models.DTO.Cart;
 using EcommerceWeb.Models.DTO.CartItem;
+using EcommerceWeb.Models.DTO.Category;
 using EcommerceWeb.Models.DTO.Customer;
 using EcommerceWeb.Models.DTO.Image;
 using EcommerceWeb.Models.DTO.Order;
@@ -60,6 +63,23 @@ namespace EcommerceWeb.Mappings
             CreateMap<OrderDetail, OrderDetailDto>().ReverseMap();
             CreateMap<OrderDetail, AddOrderDetailDto>().ReverseMap();
             CreateMap<OrderDetail, UpdateOrderDetailDto>().ReverseMap();
+
+            CreateMap<Address, AddressDto>().ReverseMap();
+            CreateMap<Address, AddAddressDto>().ReverseMap();
+            CreateMap<Address, UpdateAddressDto>().ReverseMap();
+
+            CreateMap<BillBoard, BillBoardDto>().ReverseMap();
+            CreateMap<BillBoard, AddBillBoardDto>().ReverseMap();
+            CreateMap<BillBoard, UpdateBillBoardDto>().ReverseMap();
+
+            CreateMap<Category, CategoryDto>().ReverseMap();
+            CreateMap<Category, AddCategoryDto>().ReverseMap();
+            CreateMap<Category, UpdateCategoryDto>().ReverseMap();
+
+
+
+
+
 
 
 

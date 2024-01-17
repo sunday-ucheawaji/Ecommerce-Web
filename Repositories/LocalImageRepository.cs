@@ -53,6 +53,11 @@ namespace EcommerceWeb.Repositories
                 return null;
             }
 
+            if (image.BillBoardId != null) 
+            { 
+                existingProductImage.BillBoardId = image.BillBoardId;
+            }
+
             if(image.ProductId != null)
             {
                 existingProductImage.ProductId = image.ProductId;

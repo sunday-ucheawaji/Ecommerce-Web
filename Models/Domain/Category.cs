@@ -8,7 +8,7 @@
 
         public string Description { get; set; }
 
-        public List<Product> Products { get; } = new();
+        public List<Product>? Products { get; } = new List<Product>();
 
     }
 }

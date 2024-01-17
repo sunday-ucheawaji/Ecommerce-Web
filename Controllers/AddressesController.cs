@@ -67,7 +67,7 @@ namespace EcommerceWeb.Controllers
         public async Task<IActionResult> UpdateAdress([FromRoute] Guid id, UpdateAddressDto updateAddressDto)
         {
             var addressDomain = _mapper.Map<Address>(updateAddressDto);
-            addressDomain = await _addressRepository.GetByIdAsync(id);
+            addressDomain = await _addressRepository.UpdateAsync(id, addressDomain);
             if (addressDomain == null)
             {
                 return NotFound();
