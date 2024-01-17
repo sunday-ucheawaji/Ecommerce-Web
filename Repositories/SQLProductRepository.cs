@@ -17,6 +17,7 @@ namespace EcommerceWeb.Repositories
         {
             return await dbContext.Products
                 .Include(ps => ps.ProductImages)
+                .Include(pa => pa.Categories)
                 .Include(p => p.ProductPromotions)
                 .ThenInclude(pp => pp.Promotion).ToListAsync();       
         }
@@ -25,6 +26,7 @@ namespace EcommerceWeb.Repositories
         {
             return await dbContext.Products
                 .Include(ps => ps.ProductImages)
+                .Include(pa => pa.Categories)
                 .Include(p => p.ProductPromotions)
                 .ThenInclude(pp => pp.Promotion)
                 .FirstOrDefaultAsync(x => x.ProductId == id);

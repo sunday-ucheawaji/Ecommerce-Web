@@ -45,6 +45,8 @@ builder.Services.AddSwaggerGen( options =>
         new List<string>()
         }
     });
+    // This config helps to ensure that the build doesn't fail due to models having the same name
+    options.CustomSchemaIds(type => type.ToString());
 } );
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
@@ -75,6 +77,7 @@ builder.Services.AddScoped<IOrderDetailRepository, SQLOrderDetailRepository>();
 builder.Services.AddScoped<IAddressRepository, SQLAddressRepository>();
 builder.Services.AddScoped<IBillBoardRepository, SQLBillBoardRepository>();
 builder.Services.AddScoped<ICategoryRepository, SQLCategoryRepository>();
+builder.Services.AddScoped<IReviewRepository, SQLReviewRepository>();
 
 
 

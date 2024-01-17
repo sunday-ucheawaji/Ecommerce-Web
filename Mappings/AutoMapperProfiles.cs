@@ -12,6 +12,7 @@ using EcommerceWeb.Models.DTO.Order;
 using EcommerceWeb.Models.DTO.OrderDetailFolder;
 using EcommerceWeb.Models.DTO.Product;
 using EcommerceWeb.Models.DTO.Promotion;
+using EcommerceWeb.Models.DTO.Review;
 using EcommerceWeb.Models.DTO.Staff;
 using EcommerceWeb.Models.DTO.Supplier;
 using EcommerceWeb.Repositories;
@@ -76,18 +77,11 @@ namespace EcommerceWeb.Mappings
             CreateMap<Category, AddCategoryDto>().ReverseMap();
             CreateMap<Category, UpdateCategoryDto>().ReverseMap();
 
-
-
-
-
-
-
-
+            CreateMap<Review, ReviewDto>().ReverseMap();
+            CreateMap<Review, AddReviewDto>().ReverseMap();
+            CreateMap<Review, UpdateReviewDto>().ReverseMap();
 
         }
-
-
-
 
 
     }

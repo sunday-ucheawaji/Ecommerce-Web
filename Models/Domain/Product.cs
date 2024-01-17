@@ -30,7 +30,7 @@
 
         public ICollection<CartItem>? CartItems { get; set; } = new List<CartItem>();
 
-        public List<Category>? Categories { get; } = new List<Category>();
+        public ICollection<Category>? Categories { get; } = new List<Category>();
        
 
     }

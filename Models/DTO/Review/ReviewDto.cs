@@ -1,14 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using static EcommerceWeb.Models.Domain.Order;
 
-namespace EcommerceWeb.Models.Domain
+namespace EcommerceWeb.Models.DTO.Review
 {
-    public class Review
+    public class ReviewDto
     {
-
         public enum RatingEnum
         {
-            One=1,Two=2,Three=3,Four=4,Five=5,
+            One = 1, Two = 2, Three = 3, Four = 4, Five = 5,
         }
         public Guid ReviewId { get; set; }
 
@@ -18,7 +16,7 @@ namespace EcommerceWeb.Models.Domain
 
         public DateTime DateReview { get; set; } = DateTime.Now;
 
-        public RatingEnum? Rating { get; set; }= RatingEnum.One;
+        public RatingEnum? Rating { get; set; } = RatingEnum.One;
 
         [NotMapped]
         public RatingEnum ReviewRatingEnum
@@ -30,8 +28,5 @@ namespace EcommerceWeb.Models.Domain
 
         // Foreign key
         public Guid ProductId { get; set; }
-
-        // Navigation Property
-        public Product Product { get; set; }
     }
 }

@@ -70,7 +70,12 @@ namespace EcommerceWeb.Controllers
                                 })
                                 .ToList(),
                 OrderDetails = product.OrderDetails,
-                Categories = product.Categories
+                Categories = (ICollection<Models.DTO.Category.CategoryDto>)product.Categories.Select(pp => new Models.DTO.Category.CategoryDto
+                {
+                    CategoryId = pp.CategoryId,
+                    CategoryName = pp.CategoryName,
+                    Description = pp.Description
+                })
             }).ToList();
 
             return Ok(productDto);
@@ -121,7 +126,12 @@ namespace EcommerceWeb.Controllers
                                 })
                                 .ToList(),
                 OrderDetails = product.OrderDetails,
-                Categories = product.Categories
+                Categories = (ICollection<Models.DTO.Category.CategoryDto>)product.Categories.Select(pp => new Models.DTO.Category.CategoryDto
+                {
+                    CategoryId = pp.CategoryId,
+                    CategoryName = pp.CategoryName,
+                    Description = pp.Description
+                })
             };
 
 
