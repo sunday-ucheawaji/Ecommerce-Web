@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using EcommerceWeb.Models.Domain;
 using EcommerceWeb.Models.DTO.Address;
-using EcommerceWeb.Models.DTO.Cart;
 using EcommerceWeb.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace EcommerceWeb.Controllers
 {
@@ -15,11 +14,13 @@ namespace EcommerceWeb.Controllers
 
         private readonly IAddressRepository _addressRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger<AddressesController> _logger;
 
-        public AddressesController(IAddressRepository addressRepository, IMapper mapper)
+        public AddressesController(IAddressRepository addressRepository, IMapper mapper, ILogger<AddressesController> logger)
         {
             _addressRepository = addressRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -27,6 +28,7 @@ namespace EcommerceWeb.Controllers
 
         public async Task<IActionResult> GetAllAddress()
         {
+
             var addressDomain = await _addressRepository.GetAllAsync();
 
             var addressDto = _mapper.Map<List<AddressDto>>(addressDomain);

@@ -1,0 +1,14 @@
+2024-01-21 03:37:15.191 +01:00 [INF] User profile is available. Using 'C:\Users\sunda.DESKTOP-B4OCIBH\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-01-21 03:37:15.913 +01:00 [INF] Now listening on: https://localhost:7175
+2024-01-21 03:37:15.915 +01:00 [INF] Now listening on: http://localhost:5053
+2024-01-21 03:37:15.920 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-01-21 03:37:15.922 +01:00 [INF] Hosting environment: Development
+2024-01-21 03:37:15.923 +01:00 [INF] Content root path: C:\Users\sunda.DESKTOP-B4OCIBH\Documents\EcommerceWeb\EcommerceWeb
+2024-01-21 03:37:17.091 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7175/swagger/index.html - -
+2024-01-21 03:37:17.777 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7175/swagger/index.html - - - 200 - text/html;charset=utf-8 684.4106ms
+2024-01-21 03:37:17.783 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7175/_framework/aspnetcore-browser-refresh.js - -
+2024-01-21 03:37:17.800 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7175/_framework/aspnetcore-browser-refresh.js - - - 200 12356 application/javascript;+charset=utf-8 17.1943ms
+2024-01-21 03:37:17.985 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7175/_vs/browserLink - -
+2024-01-21 03:37:18.026 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7175/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 40.4493ms
+2024-01-21 03:37:18.114 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7175/swagger/v1/swagger.json - -
+2024-01-21 03:37:18.482 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7175/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 368.7516ms
