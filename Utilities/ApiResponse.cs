@@ -9,7 +9,7 @@
 
         public T Data { get; set; }
 
-        public PaginationMetadata Metadata { get; set; }
+        public PaginationMetadata? Metadata { get; set; }
 
     }
 }
