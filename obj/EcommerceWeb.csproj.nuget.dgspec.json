@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\sunda.DESKTOP-B4OCIBH\\Documents\\EcommerceWeb\\EcommerceWeb\\EcommerceWeb.csproj": {}
+    "C:\\Users\\SUNDAY\\Documents\\EcommerceWeb\\EcommerceWeb\\EcommerceWeb.csproj": {}
   },
   "projects": {
-    "C:\\Users\\sunda.DESKTOP-B4OCIBH\\Documents\\EcommerceWeb\\EcommerceWeb\\EcommerceWeb.csproj": {
+    "C:\\Users\\SUNDAY\\Documents\\EcommerceWeb\\EcommerceWeb\\EcommerceWeb.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sunda.DESKTOP-B4OCIBH\\Documents\\EcommerceWeb\\EcommerceWeb\\EcommerceWeb.csproj",
+        "projectUniqueName": "C:\\Users\\SUNDAY\\Documents\\EcommerceWeb\\EcommerceWeb\\EcommerceWeb.csproj",
         "projectName": "EcommerceWeb",
-        "projectPath": "C:\\Users\\sunda.DESKTOP-B4OCIBH\\Documents\\EcommerceWeb\\EcommerceWeb\\EcommerceWeb.csproj",
-        "packagesPath": "C:\\Users\\sunda.DESKTOP-B4OCIBH\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sunda.DESKTOP-B4OCIBH\\Documents\\EcommerceWeb\\EcommerceWeb\\obj\\",
+        "projectPath": "C:\\Users\\SUNDAY\\Documents\\EcommerceWeb\\EcommerceWeb\\EcommerceWeb.csproj",
+        "packagesPath": "C:\\Users\\SUNDAY\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\SUNDAY\\Documents\\EcommerceWeb\\EcommerceWeb\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\sunda.DESKTOP-B4OCIBH\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\SUNDAY\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -57,6 +57,16 @@
               "version": "[7.0.4, )"
             },
             "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[7.0.13, )"
+            },
+            "Microsoft.EntityFrameworkCore.Analyzers": {
+              "target": "Package",
+              "version": "[7.0.13, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.13, )"
             },
@@ -118,7 +128,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

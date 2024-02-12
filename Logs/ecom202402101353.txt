@@ -1,0 +1,6 @@
+2024-02-10 13:53:04.707 +01:00 [INF] User profile is available. Using 'C:\Users\SUNDAY\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-10 13:53:05.408 +01:00 [INF] Now listening on: https://localhost:7175
+2024-02-10 13:53:05.462 +01:00 [INF] Now listening on: http://localhost:5053
+2024-02-10 13:53:05.466 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-10 13:53:05.468 +01:00 [INF] Hosting environment: Development
+2024-02-10 13:53:05.471 +01:00 [INF] Content root path: C:\Users\SUNDAY\Documents\EcommerceWeb\EcommerceWeb

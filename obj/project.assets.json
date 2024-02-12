@@ -4104,6 +4104,8 @@
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 7.0.14",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 7.0.4",
       "Microsoft.AspNetCore.OpenApi >= 7.0.13",
+      "Microsoft.EntityFrameworkCore.Analyzers >= 7.0.13",
+      "Microsoft.EntityFrameworkCore.Design >= 7.0.13",
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.13",
       "Microsoft.EntityFrameworkCore.Tools >= 7.0.13",
       "Microsoft.IdentityModel.Tokens >= 6.27.0",
@@ -4116,19 +4118,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\sunda.DESKTOP-B4OCIBH\\.nuget\\packages\\": {}
+    "C:\\Users\\SUNDAY\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sunda.DESKTOP-B4OCIBH\\Documents\\EcommerceWeb\\EcommerceWeb\\EcommerceWeb.csproj",
+      "projectUniqueName": "C:\\Users\\SUNDAY\\Documents\\EcommerceWeb\\EcommerceWeb\\EcommerceWeb.csproj",
       "projectName": "EcommerceWeb",
-      "projectPath": "C:\\Users\\sunda.DESKTOP-B4OCIBH\\Documents\\EcommerceWeb\\EcommerceWeb\\EcommerceWeb.csproj",
-      "packagesPath": "C:\\Users\\sunda.DESKTOP-B4OCIBH\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sunda.DESKTOP-B4OCIBH\\Documents\\EcommerceWeb\\EcommerceWeb\\obj\\",
+      "projectPath": "C:\\Users\\SUNDAY\\Documents\\EcommerceWeb\\EcommerceWeb\\EcommerceWeb.csproj",
+      "packagesPath": "C:\\Users\\SUNDAY\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\SUNDAY\\Documents\\EcommerceWeb\\EcommerceWeb\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\sunda.DESKTOP-B4OCIBH\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\SUNDAY\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4171,6 +4173,16 @@
             "version": "[7.0.4, )"
           },
           "Microsoft.AspNetCore.OpenApi": {
+            "target": "Package",
+            "version": "[7.0.13, )"
+          },
+          "Microsoft.EntityFrameworkCore.Analyzers": {
+            "target": "Package",
+            "version": "[7.0.13, )"
+          },
+          "Microsoft.EntityFrameworkCore.Design": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
             "target": "Package",
             "version": "[7.0.13, )"
           },
@@ -4232,8 +4244,30 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'System.IdentityModel.Tokens.Jwt' 6.27.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-59j7-ghrg-fj52",
+      "libraryId": "System.IdentityModel.Tokens.Jwt",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    },
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'System.IdentityModel.Tokens.Jwt' 6.27.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-8g9c-28fc-mcx2",
+      "libraryId": "System.IdentityModel.Tokens.Jwt",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    }
+  ]
 }

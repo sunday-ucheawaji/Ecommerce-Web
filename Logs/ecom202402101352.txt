@@ -1,0 +1,9 @@
+2024-02-10 13:52:19.478 +01:00 [INF] User profile is available. Using 'C:\Users\SUNDAY\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-10 13:52:19.556 +01:00 [INF] Creating key {eeafd21f-1a5a-4399-9f91-164fbc256098} with creation date 2024-02-10 12:52:19Z, activation date 2024-02-10 12:52:19Z, and expiration date 2024-05-10 12:52:19Z.
+2024-02-10 13:52:19.584 +01:00 [INF] Writing data to file 'C:\Users\SUNDAY\AppData\Local\ASP.NET\DataProtection-Keys\key-eeafd21f-1a5a-4399-9f91-164fbc256098.xml'.
+2024-02-10 13:52:21.019 +01:00 [WRN] The ASP.NET Core developer certificate is not trusted. For information about trusting the ASP.NET Core developer certificate, see https://aka.ms/aspnet/https-trust-dev-cert.
+2024-02-10 13:52:21.081 +01:00 [INF] Now listening on: https://localhost:7175
+2024-02-10 13:52:21.086 +01:00 [INF] Now listening on: http://localhost:5053
+2024-02-10 13:52:21.089 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-10 13:52:21.090 +01:00 [INF] Hosting environment: Development
+2024-02-10 13:52:21.092 +01:00 [INF] Content root path: C:\Users\SUNDAY\Documents\EcommerceWeb\EcommerceWeb
