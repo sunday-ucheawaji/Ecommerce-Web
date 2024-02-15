@@ -1,0 +1,7 @@
+2024-02-15 16:16:37.373 +01:00 [INF] Request starting HTTP/2 PUT https://localhost:7175/api/BillBoard/e2e509b2-b14f-4be9-0dda-08dc2e30dd87 application/json 34
+2024-02-15 16:16:37.414 +01:00 [INF] Executing endpoint 'EcommerceWeb.Controllers.BillBoardController.UpdateBillBoard (EcommerceWeb)'
+2024-02-15 16:16:37.556 +01:00 [INF] Route matched with {action = "UpdateBillBoard", controller = "BillBoard"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UpdateBillBoard(System.Guid, EcommerceWeb.Models.DTO.BillBoard.UpdateBillBoardDto) on controller EcommerceWeb.Controllers.BillBoardController (EcommerceWeb).
+2024-02-15 16:16:37.698 +01:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2024-02-15 16:16:37.705 +01:00 [INF] Executed action EcommerceWeb.Controllers.BillBoardController.UpdateBillBoard (EcommerceWeb) in 58.7452ms
+2024-02-15 16:16:37.712 +01:00 [INF] Executed endpoint 'EcommerceWeb.Controllers.BillBoardController.UpdateBillBoard (EcommerceWeb)'
+2024-02-15 16:16:37.714 +01:00 [INF] Request finished HTTP/2 PUT https://localhost:7175/api/BillBoard/e2e509b2-b14f-4be9-0dda-08dc2e30dd87 application/json 34 - 400 - application/problem+json;+charset=utf-8 341.1746ms

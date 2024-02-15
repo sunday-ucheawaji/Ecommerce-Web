@@ -1,0 +1,7 @@
+2024-02-15 16:14:00.238 +01:00 [INF] Executed DbCommand (39ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[BillBoardId], [b].[BillBoardName]
+FROM [BillBoards] AS [b]
+2024-02-15 16:14:00.356 +01:00 [INF] Executing OkObjectResult, writing value of type 'EcommerceWeb.Utilities.ApiResponse`1[[System.Collections.Generic.List`1[[EcommerceWeb.Models.DTO.BillBoard.BillBoardDto, EcommerceWeb, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2024-02-15 16:14:00.400 +01:00 [INF] Executed action EcommerceWeb.Controllers.BillBoardController.GetAllBillBoards (EcommerceWeb) in 2510.9202ms
+2024-02-15 16:14:00.404 +01:00 [INF] Executed endpoint 'EcommerceWeb.Controllers.BillBoardController.GetAllBillBoards (EcommerceWeb)'
+2024-02-15 16:14:00.419 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7175/api/BillBoard - - - 200 - application/json;+charset=utf-8 2650.7913ms

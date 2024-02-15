@@ -179,7 +179,6 @@ namespace EcommerceWeb.Controllers
         [HttpPost]
         [Route("")]
         [Authorize(Roles = "Staff")]
-
         public async Task<IActionResult> CreateProduct([FromBody] AddProductDto addProductDto)
         {
             var productDomainModel = mapper.Map<Product>(addProductDto);
@@ -265,8 +264,6 @@ namespace EcommerceWeb.Controllers
         public async Task<IActionResult> UpdateProduct([FromRoute] Guid id, UpdateProductDto updateProductDto)
         {
             var productDomainModel = mapper.Map<Product>(updateProductDto);
-
-
 
             if (updateProductDto.ProductImageIds != null) 
             {

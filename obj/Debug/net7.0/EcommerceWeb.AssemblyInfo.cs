@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EcommerceWeb")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8fbf4c00c9e9a3773694fe843a3a1c6e209d0e86")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eba0d35f3a44c22c12530d875ede228bec00a4ba")]
 [assembly: System.Reflection.AssemblyProductAttribute("EcommerceWeb")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EcommerceWeb")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

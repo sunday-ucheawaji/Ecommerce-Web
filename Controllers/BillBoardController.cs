@@ -68,7 +68,6 @@ namespace EcommerceWeb.Controllers
             var billBoardDomain = _mapper.Map<BillBoard>(addBillBoardDto);
             billBoardDomain = await _billboardRepository.CreateAsync(billBoardDomain);
 
-
             var productImagesList = new List<ProductImage>();
             if (addBillBoardDto.ProductImageIds != null)
             {
@@ -89,12 +88,62 @@ namespace EcommerceWeb.Controllers
             var response = new ApiResponse<BillBoardDto>
             {
                 Status = true,
-                Message = "Billboards Retrieved Successfull",
+                Message = "Billboards Created Successfull",
                 Data = billBoardDto,
                 Errors = null
             };
 
             return Ok(response);
         }
+
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateBillBoard([FromRoute] Guid id, UpdateBillBoardDto updateBillBoardDto)
+        {
+            var billBoardDomain = _mapper.Map<BillBoard>(updateBillBoardDto);
+            billBoardDomain = await _billboardRepository.UpdateAsync(id, billBoardDomain);
+
+            if (billBoardDomain == null)
+            {
+                return NotFound();
+            }
+
+            var billBoardDto = _mapper.Map<BillBoardDto>(billBoardDomain);
+
+            var response = new ApiResponse<BillBoardDto>
+            {
+                Status = true,
+                Message = "Billboard Updated Successfully",
+                Data = billBoardDto,
+                Errors = null
+            };
+
+            return Ok(response);
+        }
+
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> DeleteBillBoard([FromRoute] Guid id)
+        {
+            var billBoardDomain = await _billboardRepository.DeleteAsync(id);
+
+            if (billBoardDomain == null)
+            {
+                return NotFound();
+            }
+
+            var billBoardDto = _mapper.Map<BillBoardDto>(billBoardDomain);
+
+            var response = new ApiResponse<BillBoardDto>
+            {
+                Status = true,
+                Message = "Billboard deleted successfully!",
+                Data = billBoardDto,
+                Errors = null
+            };
+
+            return Ok(response);
+        }
+
     }
 }

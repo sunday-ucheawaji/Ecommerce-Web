@@ -33,12 +33,12 @@ namespace EcommerceWeb.Repositories
             var existingBillBoard = await _dbContext.BillBoards
                 .FirstOrDefaultAsync(x => x.BillBoardId == id);
 
-            if(existingBillBoard == null)
+            if (existingBillBoard == null)
             {
                 return null;
             }
 
-            if(billBoard.BillBoardName != null)
+            if (billBoard.BillBoardName != null)
             {
                 existingBillBoard.BillBoardName = billBoard.BillBoardName;
             }

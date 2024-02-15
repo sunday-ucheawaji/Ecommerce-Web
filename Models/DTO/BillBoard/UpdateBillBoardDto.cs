@@ -9,6 +9,6 @@ namespace EcommerceWeb.Models.DTO.BillBoard
 
         // Navigation Properties 
 
-        public List<Guid> ProductImageIds { get; set; }
+        public List<Guid>? ProductImageIds { get; set; }
     }
 }
