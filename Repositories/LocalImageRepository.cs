@@ -94,6 +94,20 @@ namespace EcommerceWeb.Repositories
 
         }
 
+        public async Task<ProductImage?> UpdateBillBoardId(Guid productImageId, Guid billBoardId)
+        {
+            var existingProductImage = await _dbContext.ProductImages.FirstOrDefaultAsync(x => x.ProductImageId == productImageId);
+            if (existingProductImage == null)
+            {
+                return null;
+            }
+            existingProductImage.BillBoardId = billBoardId;
+            await _dbContext.SaveChangesAsync();
+
+            return existingProductImage;
+
+        }
+
         public async Task<ProductImage> Upload(ProductImage image)
         {
             var localFilePath = Path.Combine(_webHostEnvironment.ContentRootPath,

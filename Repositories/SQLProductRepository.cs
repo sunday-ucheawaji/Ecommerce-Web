@@ -87,16 +87,34 @@ namespace EcommerceWeb.Repositories
             {
                 return null;   
             }
-            
-            existingProduct.Name = product.Name;
-            existingProduct.Description = product.Description;
-            existingProduct.Price = product.Price;
-            existingProduct.StockQuantity = product.StockQuantity;
+
+            if (product.Name != null)
+            {
+                existingProduct.Name = product.Name;
+            }
+
+            if (product.Description != null) 
+            { 
+                existingProduct.Description = product.Description; 
+            }
+
+            if (product.Price != 0)
+            {
+                existingProduct.Price = product.Price;
+
+            }
+
+            if (product.StockQuantity != 0)
+            {
+                existingProduct.StockQuantity = product.StockQuantity;
+            }
+
+           
             existingProduct.IsArchived = product.IsArchived;
             existingProduct.IsFeatured = product.IsFeatured;
             existingProduct.UpdatedAt = DateTime.Today;
 
-            
+
             var allImagesToSetNull = await dbContext
                 .ProductImages.Where(
                 x=> x.ProductId == productId)

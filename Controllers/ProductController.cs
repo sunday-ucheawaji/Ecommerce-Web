@@ -6,6 +6,7 @@ using EcommerceWeb.Models.DTO.Product;
 using EcommerceWeb.Models.DTO.Promotion;
 using EcommerceWeb.Repositories;
 using EcommerceWeb.Utilities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceWeb.Controllers
@@ -163,12 +164,12 @@ namespace EcommerceWeb.Controllers
                                 })
                                 .ToList(),
                 OrderDetails = product.OrderDetails,
-                Categories = (ICollection<Models.DTO.Category.CategoryDto>)product.Categories.Select(pp => new Models.DTO.Category.CategoryDto
+                Categories = product.Categories.Select(pp => new Models.DTO.Category.CategoryDto
                 {
                     CategoryId = pp.CategoryId,
                     CategoryName = pp.CategoryName,
                     Description = pp.Description
-                })
+                }).ToList()
             };
 
 
@@ -177,6 +178,7 @@ namespace EcommerceWeb.Controllers
 
         [HttpPost]
         [Route("")]
+        [Authorize(Roles = "Staff")]
 
         public async Task<IActionResult> CreateProduct([FromBody] AddProductDto addProductDto)
         {
@@ -259,6 +261,7 @@ namespace EcommerceWeb.Controllers
 
         [HttpPut]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Staff")]
         public async Task<IActionResult> UpdateProduct([FromRoute] Guid id, UpdateProductDto updateProductDto)
         {
             var productDomainModel = mapper.Map<Product>(updateProductDto);
@@ -280,6 +283,7 @@ namespace EcommerceWeb.Controllers
 
         [HttpDelete]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Staff")]
         public async Task<IActionResult> DeleteProduct([FromRoute] Guid id)
         {
             var productDomain = await productRepository.DeleteAsync(id);
