@@ -5,9 +5,13 @@ namespace EcommerceWeb.Repositories
     public interface IBillBoardRepository
     {
         Task<List<BillBoard>> GetAllAsync();
-        Task<BillBoard?> GetByIdAsync(Guid id);
-        Task<BillBoard> CreateAsync(BillBoard billboard);
-        Task<BillBoard?> UpdateAsync(Guid id, BillBoard billboard);
+
+        Task<BillBoard?> GetById(Guid id);
+
+        Task<BillBoard> CreateAsync(BillBoard billBoard);
+
+        Task<BillBoard?> UpdateAsync(Guid id, BillBoard billBoard);
+
         Task<BillBoard?> DeleteAsync(Guid id);
     }
 }

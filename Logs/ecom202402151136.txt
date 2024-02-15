@@ -1,0 +1,6 @@
+2024-02-15 11:36:03.923 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5053/api/Auth/Staff - -
+2024-02-15 11:36:03.970 +01:00 [WRN] Failed to determine the https port for redirect.
+2024-02-15 11:36:04.605 +01:00 [INF] Authorization failed. These requirements were not met:
+RolesAuthorizationRequirement:User.IsInRole must be true for one of the following roles: (Staff)
+2024-02-15 11:36:04.631 +01:00 [INF] AuthenticationScheme: Bearer was challenged.
+2024-02-15 11:36:04.634 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5053/api/Auth/Staff - - - 401 0 - 710.8407ms

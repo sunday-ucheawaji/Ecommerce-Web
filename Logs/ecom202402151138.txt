@@ -1,0 +1,5 @@
+2024-02-15 11:38:28.110 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5053/api/Auth/Staff - -
+2024-02-15 11:38:28.120 +01:00 [INF] Authorization failed. These requirements were not met:
+RolesAuthorizationRequirement:User.IsInRole must be true for one of the following roles: (Staff)
+2024-02-15 11:38:28.146 +01:00 [INF] AuthenticationScheme: Bearer was challenged.
+2024-02-15 11:38:28.148 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5053/api/Auth/Staff - - - 401 0 - 37.7828ms
