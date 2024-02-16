@@ -1,9 +1,12 @@
+using EcommerceWeb.Authorization.Addresses;
 using EcommerceWeb.Data;
 using EcommerceWeb.Mappings;
 using EcommerceWeb.Middlewares;
 using EcommerceWeb.Models.Domain;
 using EcommerceWeb.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
@@ -94,7 +97,6 @@ builder.Services.AddScoped<IReviewRepository, SQLReviewRepository>();
 
 
 
-
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireDigit = false;
@@ -120,6 +122,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     });
 
+// Custom Authorization Handlers
+builder.Services.AddTransient<IAuthorizationHandler, AddressIsOwnerAuthorizationHandler>();
+
+
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ReadAddress", policy =>
+     policy.Requirements.Add(new OperationAuthorizationRequirement { Name = "Read" }));
+
+
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -129,7 +144,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseMiddleware<ExceptionHandlerMiddleware>();
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 

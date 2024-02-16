@@ -2,6 +2,7 @@
 using EcommerceWeb.Models.Domain;
 using EcommerceWeb.Models.DTO.Address;
 using EcommerceWeb.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -25,7 +26,7 @@ namespace EcommerceWeb.Controllers
 
         [HttpGet]
         [Route("")]
-
+        [Authorize(Roles ="Customer, Staff, Supplier")]
         public async Task<IActionResult> GetAllAddress()
         {
 
