@@ -1,14 +1,18 @@
 ﻿using AutoMapper;
 using EcommerceWeb.Data;
 using EcommerceWeb.Models.Domain;
+using EcommerceWeb.Models.DTO.Address;
+using EcommerceWeb.Models.DTO.BillBoard;
 using EcommerceWeb.Models.DTO.Cart;
 using EcommerceWeb.Models.DTO.CartItem;
+using EcommerceWeb.Models.DTO.Category;
 using EcommerceWeb.Models.DTO.Customer;
 using EcommerceWeb.Models.DTO.Image;
 using EcommerceWeb.Models.DTO.Order;
 using EcommerceWeb.Models.DTO.OrderDetailFolder;
 using EcommerceWeb.Models.DTO.Product;
 using EcommerceWeb.Models.DTO.Promotion;
+using EcommerceWeb.Models.DTO.Review;
 using EcommerceWeb.Models.DTO.Staff;
 using EcommerceWeb.Models.DTO.Supplier;
 using EcommerceWeb.Repositories;
@@ -61,13 +65,23 @@ namespace EcommerceWeb.Mappings
             CreateMap<OrderDetail, AddOrderDetailDto>().ReverseMap();
             CreateMap<OrderDetail, UpdateOrderDetailDto>().ReverseMap();
 
+            CreateMap<Address, AddressDto>().ReverseMap();
+            CreateMap<Address, AddAddressDto>().ReverseMap();
+            CreateMap<Address, UpdateAddressDto>().ReverseMap();
 
+            CreateMap<BillBoard, BillBoardDto>().ReverseMap();
+            CreateMap<BillBoard, AddBillBoardDto>().ReverseMap();
+            CreateMap<BillBoard, UpdateBillBoardDto>().ReverseMap();
 
+            CreateMap<Category, CategoryDto>().ReverseMap();
+            CreateMap<Category, AddCategoryDto>().ReverseMap();
+            CreateMap<Category, UpdateCategoryDto>().ReverseMap();
+
+            CreateMap<Review, ReviewDto>().ReverseMap();
+            CreateMap<Review, AddReviewDto>().ReverseMap();
+            CreateMap<Review, UpdateReviewDto>().ReverseMap();
 
         }
-
-
-
 
 
     }

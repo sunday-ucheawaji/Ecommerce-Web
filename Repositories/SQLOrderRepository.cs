@@ -16,7 +16,9 @@ namespace EcommerceWeb.Repositories
 
         public async Task<List<Order>> getAllAsync()
         {
-            return await _dbContext.Orders.ToListAsync();
+            return await _dbContext.Orders
+                .Include(x => x.OrderDetails)
+                .ToListAsync();
         }
 
         public async Task<Order?> GetByIdAsync(Guid id)

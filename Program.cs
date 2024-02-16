@@ -1,18 +1,34 @@
+using EcommerceWeb.Authorization.Addresses;
 using EcommerceWeb.Data;
 using EcommerceWeb.Mappings;
+using EcommerceWeb.Middlewares;
 using EcommerceWeb.Models.Domain;
 using EcommerceWeb.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File("Logs/ecom.txt", rollingInterval: RollingInterval.Minute)
+    .MinimumLevel.Information()
+    .CreateLogger();
+
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
+
+
+
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -45,6 +61,8 @@ builder.Services.AddSwaggerGen( options =>
         new List<string>()
         }
     });
+    // This config helps to ensure that the build doesn't fail due to models having the same name
+    options.CustomSchemaIds(type => type.ToString());
 } );
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
@@ -72,7 +90,10 @@ builder.Services.AddScoped<ICartRepository, SQLCartRepository>();
 builder.Services.AddScoped<ICartItemRepository, SQLCartItemRepository>();
 builder.Services.AddScoped<IOrderRepository, SQLOrderRepository>();
 builder.Services.AddScoped<IOrderDetailRepository, SQLOrderDetailRepository>();
-
+builder.Services.AddScoped<IAddressRepository, SQLAddressRepository>();
+builder.Services.AddScoped<IBillBoardRepository, SQLBillBoardRepository>();
+builder.Services.AddScoped<ICategoryRepository, SQLCategoryRepository>();
+builder.Services.AddScoped<IReviewRepository, SQLReviewRepository>();
 
 
 
@@ -101,6 +122,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     });
 
+// Custom Authorization Handlers
+builder.Services.AddTransient<IAuthorizationHandler, AddressIsOwnerAuthorizationHandler>();
+
+
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ReadAddress", policy =>
+     policy.Requirements.Add(new OperationAuthorizationRequirement { Name = "Read" }));
+
+
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -109,6 +143,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 

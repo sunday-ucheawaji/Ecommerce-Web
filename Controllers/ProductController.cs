@@ -5,6 +5,8 @@ using EcommerceWeb.Models.DTO.Image;
 using EcommerceWeb.Models.DTO.Product;
 using EcommerceWeb.Models.DTO.Promotion;
 using EcommerceWeb.Repositories;
+using EcommerceWeb.Utilities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceWeb.Controllers
@@ -32,9 +34,27 @@ namespace EcommerceWeb.Controllers
 
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetAllProducts()
+        public async Task<IActionResult> GetAllProducts(
+            [FromQuery] string? filterOn, 
+            [FromQuery] string? filterQuery,
+            [FromQuery] string? sortBy,
+            [FromQuery] bool? isAscending,
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 1000
+            )
         {
-            var productDomainModel = await productRepository.GetAllAsync();
+            var productDomainModel = await productRepository.GetAllAsync(
+                filterOn, filterQuery, sortBy, 
+                isAscending ?? true, pageNumber, pageSize);
+
+            int totalItems = dbContext.Products.Count();
+            int totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+
+            if (pageNumber < 1 || pageNumber > totalPages)
+            {
+                return BadRequest("Invalid page number");
+            }
+
 
             var productDto = productDomainModel.Select(product => new ProductDto
             {
@@ -70,10 +90,32 @@ namespace EcommerceWeb.Controllers
                                 })
                                 .ToList(),
                 OrderDetails = product.OrderDetails,
-                Categories = product.Categories
+                Categories = product.Categories.Select(pp => new Models.DTO.Category.CategoryDto
+                {
+                    CategoryId = pp.CategoryId,
+                    CategoryName = pp.CategoryName,
+                    Description = pp.Description
+                })
+                .ToList()
             }).ToList();
 
-            return Ok(productDto);
+            var response = new ApiResponse<List<ProductDto>>
+            {
+                Status = true,
+                Message = "Data retrieved successfully",
+                Errors = null,
+                Data = productDto,
+                Metadata = new PaginationMetadata
+                {
+                    TotalItems = totalItems,
+                    TotalPages = totalPages,
+                    CurrentPage = pageNumber,
+                    PageSize = pageSize,
+                }
+
+            };
+
+            return Ok(response);
 
         }
 
@@ -86,6 +128,7 @@ namespace EcommerceWeb.Controllers
             {
                 return NotFound();
             }
+
 
             var productDto = new ProductDto
             {
@@ -121,7 +164,12 @@ namespace EcommerceWeb.Controllers
                                 })
                                 .ToList(),
                 OrderDetails = product.OrderDetails,
-                Categories = product.Categories
+                Categories = product.Categories.Select(pp => new Models.DTO.Category.CategoryDto
+                {
+                    CategoryId = pp.CategoryId,
+                    CategoryName = pp.CategoryName,
+                    Description = pp.Description
+                }).ToList()
             };
 
 
@@ -130,7 +178,7 @@ namespace EcommerceWeb.Controllers
 
         [HttpPost]
         [Route("")]
-
+        [Authorize(Roles = "Staff")]
         public async Task<IActionResult> CreateProduct([FromBody] AddProductDto addProductDto)
         {
             var productDomainModel = mapper.Map<Product>(addProductDto);
@@ -212,11 +260,10 @@ namespace EcommerceWeb.Controllers
 
         [HttpPut]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Staff")]
         public async Task<IActionResult> UpdateProduct([FromRoute] Guid id, UpdateProductDto updateProductDto)
         {
             var productDomainModel = mapper.Map<Product>(updateProductDto);
-
-
 
             if (updateProductDto.ProductImageIds != null) 
             {
@@ -233,6 +280,7 @@ namespace EcommerceWeb.Controllers
 
         [HttpDelete]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Staff")]
         public async Task<IActionResult> DeleteProduct([FromRoute] Guid id)
         {
             var productDomain = await productRepository.DeleteAsync(id);

@@ -13,18 +13,56 @@ namespace EcommerceWeb.Repositories
             this.dbContext = dbContext;
         }
 
-        public async Task<List<Product>> GetAllAsync()
+        public async Task<List<Product>> GetAllAsync(
+            string? filterOn = null, 
+            string? filterQuery = null, 
+            string? sortBy = null,
+            bool isAscending = true,
+            int pageNumber = 1,
+            int pageSize = 1000
+            )
         {
-            return await dbContext.Products
+            var products = dbContext.Products
                 .Include(ps => ps.ProductImages)
+                .Include(pa => pa.Categories)
                 .Include(p => p.ProductPromotions)
-                .ThenInclude(pp => pp.Promotion).ToListAsync();       
+                .ThenInclude(pp => pp.Promotion)
+                .AsQueryable();
+
+            // Filtering
+            if (string.IsNullOrWhiteSpace(filterOn) == false && string.IsNullOrWhiteSpace(filterQuery) == false)
+            {
+                if (filterOn.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    products = products.Where(x => x.Name.Contains(filterQuery));
+
+                }
+            }
+
+            // Sorting
+            if (string.IsNullOrWhiteSpace(sortBy) == false)
+            {
+                if (sortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    products = isAscending ? 
+                    products.OrderBy(x => x.Name) 
+                    : 
+                    products.OrderByDescending(x => x.Name);
+
+                }
+            }
+
+            // Pagination
+            var skipResult = (pageNumber - 1) * pageSize;
+
+            return await products.Skip(skipResult).Take(pageSize).ToListAsync();
         }
 
         public async Task<Product?> GetByIdAsync(Guid id)
         {
             return await dbContext.Products
                 .Include(ps => ps.ProductImages)
+                .Include(pa => pa.Categories)
                 .Include(p => p.ProductPromotions)
                 .ThenInclude(pp => pp.Promotion)
                 .FirstOrDefaultAsync(x => x.ProductId == id);
@@ -49,16 +87,34 @@ namespace EcommerceWeb.Repositories
             {
                 return null;   
             }
-            
-            existingProduct.Name = product.Name;
-            existingProduct.Description = product.Description;
-            existingProduct.Price = product.Price;
-            existingProduct.StockQuantity = product.StockQuantity;
+
+            if (product.Name != null)
+            {
+                existingProduct.Name = product.Name;
+            }
+
+            if (product.Description != null) 
+            { 
+                existingProduct.Description = product.Description; 
+            }
+
+            if (product.Price != 0)
+            {
+                existingProduct.Price = product.Price;
+
+            }
+
+            if (product.StockQuantity != 0)
+            {
+                existingProduct.StockQuantity = product.StockQuantity;
+            }
+
+           
             existingProduct.IsArchived = product.IsArchived;
             existingProduct.IsFeatured = product.IsFeatured;
             existingProduct.UpdatedAt = DateTime.Today;
 
-            
+
             var allImagesToSetNull = await dbContext
                 .ProductImages.Where(
                 x=> x.ProductId == productId)

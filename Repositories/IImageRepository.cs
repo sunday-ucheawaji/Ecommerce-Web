@@ -14,6 +14,8 @@ namespace EcommerceWeb.Repositories
 
         Task<ProductImage?> UpdateProductId(Guid productImageId, Guid productId);
 
+        Task<ProductImage?> UpdateBillBoardId(Guid productImageId, Guid billBoardId);
+
         Task<ProductImage?> Delete(Guid productImageId);
     }
 }

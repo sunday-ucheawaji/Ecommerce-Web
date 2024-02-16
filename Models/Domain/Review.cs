@@ -1,4 +1,5 @@
-﻿using static EcommerceWeb.Models.Domain.Order;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using static EcommerceWeb.Models.Domain.Order;
 
 namespace EcommerceWeb.Models.Domain
 {
@@ -15,9 +16,16 @@ namespace EcommerceWeb.Models.Domain
 
         public string Description { get; set; }
 
-        public DateTime DateReview { get; set; }
+        public DateTime DateReview { get; set; } = DateTime.Now;
 
-        public RatingEnum? Rating { get; set; }
+        public RatingEnum? Rating { get; set; }= RatingEnum.One;
+
+        [NotMapped]
+        public RatingEnum ReviewRatingEnum
+        {
+            get => (RatingEnum)Rating;
+            set => Rating = value;
+        }
 
 
         // Foreign key

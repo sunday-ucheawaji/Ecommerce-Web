@@ -53,6 +53,11 @@ namespace EcommerceWeb.Repositories
                 return null;
             }
 
+            if (image.BillBoardId != null) 
+            { 
+                existingProductImage.BillBoardId = image.BillBoardId;
+            }
+
             if(image.ProductId != null)
             {
                 existingProductImage.ProductId = image.ProductId;
@@ -83,6 +88,20 @@ namespace EcommerceWeb.Repositories
                 return null;
             }
             existingProductImage.ProductId = productId;
+            await _dbContext.SaveChangesAsync();
+
+            return existingProductImage;
+
+        }
+
+        public async Task<ProductImage?> UpdateBillBoardId(Guid productImageId, Guid billBoardId)
+        {
+            var existingProductImage = await _dbContext.ProductImages.FirstOrDefaultAsync(x => x.ProductImageId == productImageId);
+            if (existingProductImage == null)
+            {
+                return null;
+            }
+            existingProductImage.BillBoardId = billBoardId;
             await _dbContext.SaveChangesAsync();
 
             return existingProductImage;

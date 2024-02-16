@@ -10,9 +10,9 @@
 
         public int? StockQuantity { get; set; }
 
-        public bool? IsFeatured { get; set; }
+        public bool IsFeatured { get; set; }
 
-        public bool? IsArchived { get; set; }
+        public bool IsArchived { get; set; }
 
         // Navigation Properties
         public List<Guid>? PromotionIds { get; set; } = new List<Guid>();

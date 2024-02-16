@@ -2,6 +2,7 @@
 using EcommerceWeb.Models.Domain;
 using EcommerceWeb.Models.DTO.Image;
 using EcommerceWeb.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace EcommerceWeb.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Staff")]
     public class ImagesController : ControllerBase
     {
         private readonly IImageRepository _imageRepository;
